@@ -14,18 +14,25 @@ export default {
     },
     extend: {
       colors: {
+        /* Premium Design System Colors */
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
+        "input-border": "hsl(var(--input-border))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        surface: "hsl(var(--surface))",
+        "surface-variant": "hsl(var(--surface-variant))",
+        
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          hover: "hsl(var(--primary-hover))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
+          hover: "hsl(var(--secondary-hover))",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
@@ -39,14 +46,15 @@ export default {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
+          hover: "hsl(var(--card-hover))",
         },
+        success: "hsl(var(--success))",
+        warning: "hsl(var(--warning))",
+        
+        /* Keep existing sidebar colors for compatibility */
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
@@ -57,6 +65,34 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+      },
+      boxShadow: {
+        'premium': 'var(--shadow-premium)',
+        'lg': 'var(--shadow-lg)',
+        'md': 'var(--shadow-md)',
+        'sm': 'var(--shadow-sm)',
+      },
+      backgroundImage: {
+        'gradient-subtle': 'var(--gradient-subtle)',
+        'gradient-dark': 'var(--gradient-dark)',
+      },
+      transitionDuration: {
+        'fast': '150ms',
+        'normal': '250ms', 
+        'slow': '350ms',
+      },
+      fontFamily: {
+        sans: [
+          'Inter',
+          '-apple-system', 
+          'BlinkMacSystemFont', 
+          'Segoe UI', 
+          'Roboto', 
+          'Oxygen', 
+          'Ubuntu', 
+          'Cantarell', 
+          'sans-serif'
+        ],
       },
       borderRadius: {
         lg: "var(--radius)",
