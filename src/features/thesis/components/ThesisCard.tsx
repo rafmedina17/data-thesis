@@ -98,17 +98,6 @@ const ThesisCard = ({ thesis, onClick }: ThesisCardProps) => {
             </div>
             <span>{thesis.pages} pages</span>
           </div>
-          
-          <Button 
-            size="sm" 
-            variant="outline"
-            onClick={handleDownload}
-            disabled={downloadMutation.isPending}
-            className="hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-normal"
-          >
-            <Download className="w-3 h-3 mr-1" />
-            {downloadMutation.isPending ? 'Downloading...' : 'Download'}
-          </Button>
         </div>
       </div>
     </Card>
