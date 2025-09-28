@@ -96,10 +96,6 @@ const ThesisCard = ({ thesis, onClick }: ThesisCardProps) => {
               <Eye className="w-3 h-3 mr-1" />
               <span>{thesis.viewCount.toLocaleString()}</span>
             </div>
-            <div className="flex items-center">
-              <Download className="w-3 h-3 mr-1" />
-              <span>{thesis.downloadCount.toLocaleString()}</span>
-            </div>
             <span>{thesis.pages} pages</span>
           </div>
           
