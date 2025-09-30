@@ -13,7 +13,7 @@ const LandingPage = () => {
                 <Library className="w-6 h-6" />
               </div>
               <div>
-                <h1 className="text-lg font-semibold">Thesis Archive</h1>
+                <h1 className="text-lg font-semibold">Tayabas Western Academy</h1>
                 <p className="text-sm text-muted-foreground">Academic Research Repository</p>
               </div>
             </div>
