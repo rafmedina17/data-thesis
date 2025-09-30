@@ -17,6 +17,20 @@ const LandingPage = () => {
                 <p className="text-sm text-muted-foreground">Academic Research Repository</p>
               </div>
             </div>
+            <div className="flex items-center space-x-2">
+              <button
+                className="px-3 py-1 rounded-md text-sm font-medium hover:bg-muted/50 transition-colors"
+                onClick={() => window.location.reload()}
+              >
+                Home
+              </button>
+              <button
+                className="px-3 py-1 rounded-md text-sm font-medium hover:bg-muted/50 transition-colors"
+                // About functionality placeholder
+              >
+                About
+              </button>
+            </div>
           </div>
         </div>
       </header>
