@@ -76,21 +76,30 @@ const ThesisDashboard = ({ department }: ThesisDashboardProps) => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <Button 
-                variant="ghost" 
-                size="sm"
-                onClick={() => navigate('/')}
-                className="hover:bg-muted/50"
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back to Home
-              </Button>
               <div>
                 <h1 className="text-xl font-semibold">{departmentTitle}</h1>
                 <p className="text-sm text-muted-foreground">
                   {data?.total || 0} research papers available
                 </p>
               </div>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => navigate('/')}
+                className="hover:bg-muted/50"
+              >
+                Home
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="hover:bg-muted/50"
+                // About functionality placeholder
+              >
+                About
+              </Button>
             </div>
           </div>
         </div>
