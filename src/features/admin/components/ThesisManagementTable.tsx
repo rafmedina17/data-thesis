@@ -66,8 +66,6 @@ const ThesisManagementTable = ({ theses, isLoading }: ThesisManagementTableProps
             <TableHead className="font-semibold">Authors</TableHead>
             <TableHead className="font-semibold">Program</TableHead>
             <TableHead className="font-semibold">Year</TableHead>
-            <TableHead className="font-semibold">Status</TableHead>
-            <TableHead className="font-semibold">Views</TableHead>
             <TableHead className="text-right font-semibold">Actions</TableHead>
           </TableRow>
         </TableHeader>
@@ -89,19 +87,6 @@ const ThesisManagementTable = ({ theses, isLoading }: ThesisManagementTableProps
               </TableCell>
               <TableCell>
                 <div className="text-sm">{thesis.year}</div>
-              </TableCell>
-              <TableCell>
-                <Badge 
-                  variant={thesis.status === 'published' ? 'default' : 'secondary'}
-                  className="capitalize"
-                >
-                  {thesis.status}
-                </Badge>
-              </TableCell>
-              <TableCell>
-                <div className="text-sm text-muted-foreground">
-                  {thesis.viewCount.toLocaleString()}
-                </div>
               </TableCell>
               <TableCell>
                 <div className="flex items-center justify-end gap-2">
