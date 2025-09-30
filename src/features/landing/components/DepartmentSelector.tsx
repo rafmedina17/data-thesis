@@ -12,7 +12,6 @@ const DepartmentSelector = () => {
     {
       id: 'college',
       title: 'College Department',
-      description: 'Browse undergraduate and graduate thesis from various college programs',
       icon: GraduationCap,
       color: 'from-primary/5 to-primary/10',
       path: '/college'
@@ -20,7 +19,6 @@ const DepartmentSelector = () => {
     {
       id: 'senior-high',
       title: 'Senior High School',
-      description: 'Explore capstone projects and research papers from senior high students',
       icon: BookOpen,
       color: 'from-accent/5 to-accent/10',
       path: '/senior-high'
@@ -55,10 +53,6 @@ const DepartmentSelector = () => {
               <h3 className="text-heading mb-3 group-hover:text-primary transition-colors duration-normal">
                 {dept.title}
               </h3>
-              
-              <p className="text-body text-muted-foreground mb-6 leading-relaxed">
-                {dept.description}
-              </p>
               
               <Button 
                 variant="outline" 
