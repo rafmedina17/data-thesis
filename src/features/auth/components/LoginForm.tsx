@@ -10,12 +10,12 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, AlertCircle } from 'lucide-react';
 
 const loginSchema = z.object({
-  email: z
+  username: z
     .string()
     .trim()
-    .nonempty({ message: 'Email is required' })
-    .email({ message: 'Invalid email address' })
-    .max(255, { message: 'Email must be less than 255 characters' }),
+    .nonempty({ message: 'Username is required' })
+    .email({ message: 'Invalid username address' })
+    .max(255, { message: 'username must be less than 255 characters' }),
   password: z
     .string()
     .nonempty({ message: 'Password is required' })
@@ -43,7 +43,7 @@ export const LoginForm = () => {
     setError('');
 
     try {
-      await login(data.email, data.password);
+      await login(data.username, data.password);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Login failed');
     } finally {
@@ -61,16 +61,16 @@ export const LoginForm = () => {
       )}
 
       <div className="space-y-2">
-        <Label htmlFor="email">Email Address</Label>
+        <Label htmlFor="username">Username</Label>
         <Input
-          id="email"
-          type="email"
-          placeholder="admin@twa.edu"
-          {...register('email')}
+          id="username"
+          type="username"
+          placeholder="Enter your username"
+          {...register('username')}
           disabled={isLoading}
         />
-        {errors.email && (
-          <p className="text-sm text-destructive">{errors.email.message}</p>
+        {errors.username && (
+          <p className="text-sm text-destructive">{errors.username.message}</p>
         )}
       </div>
 

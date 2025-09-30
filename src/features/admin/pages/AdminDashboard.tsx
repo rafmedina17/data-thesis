@@ -101,10 +101,10 @@ const AdminDashboard = () => {
           <TabsContent value="college" className="space-y-4">
             <Card>
               <CardHeader>
-                <CardTitle>College Thesis Management</CardTitle>
-                <CardDescription>
-                  Add, edit, or remove college thesis records
-                </CardDescription>
+                <div className="flex items-center justify-between">
+                  <CardTitle>College Thesis Management</CardTitle>
+                  <Button>+ Add New Thesis</Button>
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="flex items-center justify-center py-12">
@@ -113,7 +113,6 @@ const AdminDashboard = () => {
                     <p className="text-muted-foreground mb-4">
                       Thesis management features coming soon
                     </p>
-                    <Button>Add New Thesis</Button>
                   </div>
                 </div>
               </CardContent>
@@ -123,10 +122,10 @@ const AdminDashboard = () => {
           <TabsContent value="senior-high" className="space-y-4">
             <Card>
               <CardHeader>
+                <div className="flex items-center justify-between">
                 <CardTitle>Senior High Thesis Management</CardTitle>
-                <CardDescription>
-                  Add, edit, or remove senior high thesis records
-                </CardDescription>
+                <Button>+ Add New Thesis</Button>
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="flex items-center justify-center py-12">
@@ -135,7 +134,6 @@ const AdminDashboard = () => {
                     <p className="text-muted-foreground mb-4">
                       Thesis management features coming soon
                     </p>
-                    <Button>Add New Thesis</Button>
                   </div>
                 </div>
               </CardContent>

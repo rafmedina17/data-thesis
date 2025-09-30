@@ -22,7 +22,7 @@ const LoginPage = () => {
             <GraduationCap className="h-10 w-10" />
             <div className="text-left">
               <h1 className="text-2xl font-bold">TWA Admin Portal</h1>
-              <p className="text-sm text-muted-foreground">Tayabas Western Academy</p>
+              <p className="text-sm text-muted-foreground">Tayabas Western Academy Repository</p>
             </div>
           </div>
         </div>
@@ -30,9 +30,6 @@ const LoginPage = () => {
         <div className="bg-card border border-border rounded-lg p-8 shadow-sm">
           <div className="mb-6">
             <h2 className="text-xl font-semibold mb-2">Admin Login</h2>
-            <p className="text-sm text-muted-foreground">
-              Enter your credentials to access the admin dashboard
-            </p>
           </div>
           <LoginForm />
         </div>

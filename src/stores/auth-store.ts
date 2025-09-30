@@ -30,7 +30,7 @@ export const useAuthStore = create<AuthState>()(
           };
           set({ user, isAuthenticated: true });
         } else {
-          throw new Error('Invalid email or password');
+          throw new Error('Invalid username or password');
         }
       },
       logout: () => {
