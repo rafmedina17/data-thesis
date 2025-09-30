@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Grid, List, Filter, ArrowLeft } from "lucide-react";
+import { Grid, List, Filter, ArrowLeft, Library } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useUIStore } from "@/stores/ui-store";
 import { useThesisList } from "../hooks/useThesis";
@@ -75,12 +75,13 @@ const ThesisDashboard = ({ department }: ThesisDashboardProps) => {
       <header className="border-b border-border/50 bg-background/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-3">
+              <div className="p-2 rounded-xl bg-primary text-primary-foreground">
+                <Library className="w-6 h-6" />
+              </div>
               <div>
-                <h1 className="text-xl font-semibold">{departmentTitle}</h1>
-                <p className="text-sm text-muted-foreground">
-                  {data?.total || 0} research papers available
-                </p>
+                <h1 className="text-lg font-semibold">Tayabas Western Academy</h1>
+                <p className="text-sm text-muted-foreground">Academic Research Repository</p>
               </div>
             </div>
             <div className="flex items-center space-x-2">
@@ -104,6 +105,16 @@ const ThesisDashboard = ({ department }: ThesisDashboardProps) => {
           </div>
         </div>
       </header>
+
+      {/* Department & Stats */}
+      <div className="container mx-auto px-4 py-4">
+        <div>
+          <h1 className="text-xl font-semibold">{departmentTitle}</h1>
+          <p className="text-sm text-muted-foreground">
+            {data?.total || 0} research papers available
+          </p>
+        </div>
+      </div>
 
       <div className="container mx-auto px-4 py-8">
         {/* Filters & Search */}
