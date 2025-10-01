@@ -10,6 +10,7 @@ import { GraduationCap, LogOut, BookOpen, Users, Database } from 'lucide-react';
 import SearchInput from '@/components/shared/SearchInput';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import ThesisManagementTable from '../components/ThesisManagementTable';
+import AddThesisDialog from '../components/AddThesisDialog';
 import { useThesisList } from '@/features/thesis/hooks/useThesis';
 import { ThesisFilters } from '@/types/thesis';
 
@@ -18,6 +19,7 @@ const AdminDashboard = () => {
   const { user, logout } = useAuthStore();
   const { searchQuery } = useUIStore();
   const [activeTab, setActiveTab] = useState<'college' | 'senior-high'>('college');
+  const [addThesisOpen, setAddThesisOpen] = useState(false);
   
   const [collegeFilters, setCollegeFilters] = useState<ThesisFilters>({
     department: 'college',
@@ -153,7 +155,7 @@ const AdminDashboard = () => {
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle>College Thesis Management</CardTitle>
-                  <Button>+ Add New Thesis</Button>
+                  <Button onClick={() => setAddThesisOpen(true)}>+ Add New Thesis</Button>
                 </div>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -216,7 +218,7 @@ const AdminDashboard = () => {
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle>Senior High Thesis Management</CardTitle>
-                  <Button>+ Add New Thesis</Button>
+                  <Button onClick={() => setAddThesisOpen(true)}>+ Add New Thesis</Button>
                 </div>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -293,6 +295,13 @@ const AdminDashboard = () => {
           </TabsContent>
         </Tabs>
       </main>
+
+      {/* Add Thesis Dialog */}
+      <AddThesisDialog 
+        open={addThesisOpen} 
+        onOpenChange={setAddThesisOpen}
+        department={activeTab}
+      />
     </div>
   );
 };
