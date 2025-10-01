@@ -34,12 +34,12 @@ const AdminDashboard = () => {
   const collegeData = useThesisList({
     ...collegeFilters,
     search: searchQuery || undefined,
-  });
+  }, 1, 1000);
 
   const seniorHighData = useThesisList({
     ...seniorHighFilters,
     search: searchQuery || undefined,
-  });
+  }, 1, 1000);
 
   const handleLogout = () => {
     logout();

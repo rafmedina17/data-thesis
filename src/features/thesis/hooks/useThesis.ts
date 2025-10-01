@@ -79,10 +79,10 @@ export const thesisKeys = {
   detail: (id: string) => [...thesisKeys.details(), id] as const,
 };
 
-// Fetch thesis list with filters
-export const useThesisList = (filters: ThesisFilters = {}) => {
+// Fetch thesis list with filters and pagination
+export const useThesisList = (filters: ThesisFilters = {}, page: number = 1, limit: number = 10) => {
   return useQuery({
-    queryKey: thesisKeys.list(filters),
+    queryKey: [...thesisKeys.list(filters), page, limit],
     queryFn: async (): Promise<ThesisResponse> => {
       // Mock API call - replace with real API
       await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate network delay
@@ -111,13 +111,20 @@ export const useThesisList = (filters: ThesisFilters = {}) => {
       if (filters.program) {
         filteredTheses = filteredTheses.filter(thesis => thesis.program === filters.program);
       }
+
+      // Apply pagination
+      const total = filteredTheses.length;
+      const totalPages = Math.ceil(total / limit);
+      const startIndex = (page - 1) * limit;
+      const endIndex = startIndex + limit;
+      const paginatedTheses = filteredTheses.slice(startIndex, endIndex);
       
       return {
-        data: filteredTheses,
-        total: filteredTheses.length,
-        page: 1,
-        limit: 20,
-        totalPages: Math.ceil(filteredTheses.length / 20),
+        data: paginatedTheses,
+        total,
+        page,
+        limit,
+        totalPages,
       };
     },
     staleTime: 5 * 60 * 1000, // 5 minutes

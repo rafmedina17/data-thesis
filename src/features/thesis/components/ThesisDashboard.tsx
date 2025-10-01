@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Grid, List, Filter, ArrowLeft, Library } from "lucide-react";
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import { Filter, Library } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useUIStore } from "@/stores/ui-store";
 import { useThesisList } from "../hooks/useThesis";
-import { ThesisFilters } from "@/types/thesis";
+import { ThesisFilters, Thesis } from "@/types/thesis";
 import SearchInput from "@/components/shared/SearchInput";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
 import ThesisCard from "./ThesisCard";
+import ThesisViewDialog from "./ThesisViewDialog";
 
 interface ThesisDashboardProps {
   department: 'college' | 'senior-high';
@@ -16,10 +18,14 @@ interface ThesisDashboardProps {
 
 const ThesisDashboard = ({ department }: ThesisDashboardProps) => {
   const navigate = useNavigate();
-  const { viewMode, setViewMode, searchQuery } = useUIStore();
+  const { searchQuery } = useUIStore();
   const [filters, setFilters] = useState<ThesisFilters>({
     department,
   });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [selectedThesis, setSelectedThesis] = useState<Thesis | null>(null);
+  const [isViewDialogOpen, setIsViewDialogOpen] = useState(false);
 
   // Update filters when search changes
   const currentFilters = {
@@ -27,7 +33,12 @@ const ThesisDashboard = ({ department }: ThesisDashboardProps) => {
     search: searchQuery || undefined,
   };
 
-  const { data, isLoading, error } = useThesisList(currentFilters);
+  const { data, isLoading, error } = useThesisList(currentFilters, currentPage, pageSize);
+
+  const handleThesisClick = (thesis: Thesis) => {
+    setSelectedThesis(thesis);
+    setIsViewDialogOpen(true);
+  };
 
   const departmentTitle = department === 'college' ? 'College Department' : 'Senior High School';
 
@@ -169,24 +180,110 @@ const ThesisDashboard = ({ department }: ThesisDashboardProps) => {
             <p className="text-muted-foreground">Try adjusting your search criteria or filters</p>
           </div>
         ) : (
-          <div className={`grid gap-6 ${
-            viewMode === 'grid' 
-              ? 'grid-cols-1 md:grid-cols-2 xl:grid-cols-3' 
-              : 'grid-cols-1 max-w-4xl mx-auto'
-          }`}>
-            {data?.data.map((thesis) => (
-              <ThesisCard 
-                key={thesis.id} 
-                thesis={thesis}
-                onClick={(thesis) => {
-                  // Navigate to thesis detail page (to be implemented)
-                  console.log('Navigate to thesis:', thesis.id);
-                }}
-              />
-            ))}
-          </div>
+          <>
+            {/* Thesis List */}
+            <div className="space-y-4 mb-8">
+              {data?.data.map((thesis) => (
+                <ThesisCard 
+                  key={thesis.id} 
+                  thesis={thesis}
+                  onClick={handleThesisClick}
+                />
+              ))}
+            </div>
+
+            {/* Pagination Controls */}
+            {data && data.totalPages > 1 && (
+              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-8">
+                {/* Page size selector */}
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-muted-foreground">Items per page:</span>
+                  <Select 
+                    value={pageSize.toString()} 
+                    onValueChange={(value) => {
+                      setPageSize(Number(value));
+                      setCurrentPage(1); // Reset to first page
+                    }}
+                  >
+                    <SelectTrigger className="w-[100px]">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="5">5</SelectItem>
+                      <SelectItem value="10">10</SelectItem>
+                      <SelectItem value="20">20</SelectItem>
+                      <SelectItem value="50">50</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+                {/* Pagination */}
+                <Pagination>
+                  <PaginationContent>
+                    <PaginationItem>
+                      <PaginationPrevious 
+                        onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                        className={currentPage === 1 ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                      />
+                    </PaginationItem>
+                    
+                    {Array.from({ length: data.totalPages }, (_, i) => i + 1).map((page) => {
+                      // Show first page, last page, current page, and pages around current
+                      const showPage = 
+                        page === 1 || 
+                        page === data.totalPages || 
+                        (page >= currentPage - 1 && page <= currentPage + 1);
+                      
+                      if (!showPage) {
+                        // Show ellipsis for skipped pages
+                        if (page === currentPage - 2 || page === currentPage + 2) {
+                          return (
+                            <PaginationItem key={page}>
+                              <span className="px-4">...</span>
+                            </PaginationItem>
+                          );
+                        }
+                        return null;
+                      }
+
+                      return (
+                        <PaginationItem key={page}>
+                          <PaginationLink
+                            onClick={() => setCurrentPage(page)}
+                            isActive={currentPage === page}
+                            className="cursor-pointer"
+                          >
+                            {page}
+                          </PaginationLink>
+                        </PaginationItem>
+                      );
+                    })}
+                    
+                    <PaginationItem>
+                      <PaginationNext 
+                        onClick={() => setCurrentPage(prev => Math.min(data.totalPages, prev + 1))}
+                        className={currentPage === data.totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
+                      />
+                    </PaginationItem>
+                  </PaginationContent>
+                </Pagination>
+
+                {/* Page info */}
+                <div className="text-sm text-muted-foreground">
+                  Page {currentPage} of {data.totalPages}
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
+
+      {/* View Dialog */}
+      <ThesisViewDialog 
+        thesis={selectedThesis}
+        open={isViewDialogOpen}
+        onOpenChange={setIsViewDialogOpen}
+      />
     </div>
   );
 };
