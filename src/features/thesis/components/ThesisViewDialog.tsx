@@ -2,8 +2,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Calendar, FileText, Users, Eye, Download, BookOpen, Languages } from "lucide-react";
+import { Calendar, FileText, Users, BookOpen} from "lucide-react";
 import { Thesis } from "@/types/thesis";
+import DepartmentSelector from "@/features/landing/components/DepartmentSelector";
 
 interface ThesisViewDialogProps {
   thesis: Thesis | null;
@@ -39,9 +40,6 @@ const ThesisViewDialog = ({ thesis, open, onOpenChange }: ThesisViewDialogProps)
               <Badge variant="outline" className="text-sm">
                 {thesis.year}
               </Badge>
-              <Badge variant="outline" className="text-sm">
-                {thesis.status}
-              </Badge>
             </div>
 
             {/* Authors Section */}
@@ -64,49 +62,15 @@ const ThesisViewDialog = ({ thesis, open, onOpenChange }: ThesisViewDialogProps)
 
             <Separator />
 
-            {/* Advisors Section */}
-            <div>
-              <div className="flex items-center gap-2 mb-3">
-                <Users className="w-5 h-5 text-muted-foreground" />
-                <h3 className="font-semibold">Advisors</h3>
-              </div>
-              <div className="space-y-2">
-                {thesis.advisors.map((advisor) => (
-                  <div key={advisor.id} className="flex flex-col">
-                    <span className="font-medium">{advisor.name}</span>
-                    <span className="text-sm text-muted-foreground">
-                      {advisor.title} - {advisor.department}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <Separator />
-
             {/* Abstract */}
             <div>
               <div className="flex items-center gap-2 mb-3">
                 <FileText className="w-5 h-5 text-muted-foreground" />
-                <h3 className="font-semibold">Abstract</h3>
+                <h3 className="font-semibold">Abstract/Summary</h3>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 {thesis.abstract}
               </p>
-            </div>
-
-            <Separator />
-
-            {/* Keywords */}
-            <div>
-              <h3 className="font-semibold mb-3">Keywords</h3>
-              <div className="flex flex-wrap gap-2">
-                {thesis.keywords.map((keyword, index) => (
-                  <Badge key={index} variant="outline" className="text-xs">
-                    {keyword}
-                  </Badge>
-                ))}
-              </div>
             </div>
 
             <Separator />
@@ -128,38 +92,7 @@ const ThesisViewDialog = ({ thesis, open, onOpenChange }: ThesisViewDialogProps)
                   <p className="text-sm text-muted-foreground">{formatDate(thesis.dateSubmitted)}</p>
                 </div>
               </div>
-
-              <div className="flex items-start gap-3">
-                <FileText className="w-5 h-5 text-muted-foreground mt-0.5" />
-                <div>
-                  <p className="text-sm font-medium">Pages</p>
-                  <p className="text-sm text-muted-foreground">{thesis.pages} pages</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <Languages className="w-5 h-5 text-muted-foreground mt-0.5" />
-                <div>
-                  <p className="text-sm font-medium">Language</p>
-                  <p className="text-sm text-muted-foreground">{thesis.language}</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <Eye className="w-5 h-5 text-muted-foreground mt-0.5" />
-                <div>
-                  <p className="text-sm font-medium">Views</p>
-                  <p className="text-sm text-muted-foreground">{thesis.viewCount.toLocaleString()}</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3">
-                <Download className="w-5 h-5 text-muted-foreground mt-0.5" />
-                <div>
-                  <p className="text-sm font-medium">Downloads</p>
-                  <p className="text-sm text-muted-foreground">{thesis.downloadCount.toLocaleString()}</p>
-                </div>
-              </div>
+            
             </div>
           </div>
         </ScrollArea>

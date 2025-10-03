@@ -39,11 +39,6 @@ const ThesisCard = ({ thesis, onClick }: ThesisCardProps) => {
               <Calendar className="w-4 h-4" />
               <span>{thesis.year}</span>
             </div>
-
-            <div className="flex items-center gap-2">
-              <Eye className="w-4 h-4" />
-              <span>{thesis.viewCount.toLocaleString()} views</span>
-            </div>
           </div>
         </div>
 
