@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import { useSettingsStore } from '@/stores/settings-store';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -39,9 +40,10 @@ const categories = ['Research', 'Case Study', 'Experimental', 'Theoretical', 'Ap
 const AddThesisDialog = ({ open, onOpenChange, department }: AddThesisDialogProps) => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { getProgramsByDepartment } = useSettingsStore();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const programs = department === 'college' ? collegePrograms : seniorHighPrograms;
+  const availablePrograms = getProgramsByDepartment(department);
   
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 25 }, (_, i) => currentYear - i);
@@ -181,11 +183,17 @@ const AddThesisDialog = ({ open, onOpenChange, department }: AddThesisDialogProp
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {programs.map(program => (
-                          <SelectItem key={program} value={program}>
-                            {program}
-                          </SelectItem>
-                        ))}
+                        {availablePrograms.length === 0 ? (
+                          <div className="px-2 py-1.5 text-sm text-muted-foreground">
+                            No programs available
+                          </div>
+                        ) : (
+                          availablePrograms.map(program => (
+                            <SelectItem key={program.id} value={program.name}>
+                              {program.name}
+                            </SelectItem>
+                          ))
+                        )}
                       </SelectContent>
                     </Select>
                     <FormMessage />

@@ -1,19 +1,37 @@
-import { Library, Sparkles } from "lucide-react";
+import { Library } from "lucide-react";
 import DepartmentSelector from "../components/DepartmentSelector";
+import { useSettingsStore } from '@/stores/settings-store';
 
 const LandingPage = () => {
+  const { systemSettings } = useSettingsStore();
+  
   return (
     <div className="min-h-screen bg-gradient-subtle">
       {/* Header */}
-      <header className="border-b border-border/50 bg-background/80 backdrop-blur-sm sticky top-0 z-50">
+      <header 
+        className="border-b border-border/50 bg-background/80 backdrop-blur-sm sticky top-0 z-50"
+        style={systemSettings.headerBackground ? {
+          backgroundImage: `url(${systemSettings.headerBackground})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        } : undefined}
+      >
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="p-2 rounded-xl bg-primary text-primary-foreground">
-                <Library className="w-6 h-6" />
-              </div>
+              {systemSettings.schoolLogo ? (
+                <img 
+                  src={systemSettings.schoolLogo} 
+                  alt={systemSettings.schoolName}
+                  className="h-10 w-10 object-contain rounded-xl"
+                />
+              ) : (
+                <div className="p-2 rounded-xl bg-primary text-primary-foreground">
+                  <Library className="w-6 h-6" />
+                </div>
+              )}
               <div>
-                <h1 className="text-lg font-semibold">Tayabas Western Academy</h1>
+                <h1 className="text-lg font-semibold">{systemSettings.schoolName}</h1>
                 <p className="text-sm text-muted-foreground">Academic Research Repository</p>
               </div>
             </div>
@@ -31,8 +49,7 @@ const LandingPage = () => {
           </h1>
           
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Access a comprehensive collection of thesis and research papers from our academic community. 
-            Explore groundbreaking work across departments and programs.
+            {systemSettings.aboutContent}
           </p>
         </div>
 
