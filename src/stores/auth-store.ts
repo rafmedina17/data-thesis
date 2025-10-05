@@ -12,8 +12,6 @@ interface AuthState {
   isAuthenticated: boolean;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
-  updateEmail: (newEmail: string) => Promise<void>;
-  updatePassword: (currentPassword: string, newPassword: string) => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -37,25 +35,6 @@ export const useAuthStore = create<AuthState>()(
       },
       logout: () => {
         set({ user: null, isAuthenticated: false });
-      },
-      updateEmail: async (newEmail: string) => {
-        // TODO: Replace with actual API call when backend is ready
-        const currentUser = useAuthStore.getState().user;
-        if (currentUser) {
-          const updatedUser: User = {
-            ...currentUser,
-            email: newEmail,
-          };
-          set({ user: updatedUser });
-        }
-      },
-      updatePassword: async (currentPassword: string, newPassword: string) => {
-        // TODO: Replace with actual API call when backend is ready
-        // For now, mock validation
-        if (currentPassword !== 'admin123') {
-          throw new Error('Current password is incorrect');
-        }
-        // Password would be updated in real implementation
       },
     }),
     {
