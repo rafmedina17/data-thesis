@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 import { GraduationCap, LogOut, BookOpen, Users, Database, User } from 'lucide-react';
 import { SystemSettings } from '../components/SystemSettings';
+import { PersonalSettings } from '../components/PersonalSettings';
 import SearchInput from '@/components/shared/SearchInput';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import ThesisManagementTable from '../components/ThesisManagementTable';
@@ -48,8 +49,13 @@ const AdminDashboard = () => {
   };
 
   const handlePersonalSettings = () => {
-    // Navigate to personal settings page (implement as needed)
-    navigate('/settings');
+    // Switch to settings tab (personal settings subtab)
+    const settingsTab = document.querySelector('[value="settings"]') as HTMLButtonElement;
+    settingsTab?.click();
+    setTimeout(() => {
+      const personalTab = document.querySelectorAll('[value="personal"]')[1] as HTMLButtonElement;
+      personalTab?.click();
+    }, 100);
   };
 
   const handleFilterChange = (
@@ -294,7 +300,20 @@ const AdminDashboard = () => {
           </TabsContent>
 
           <TabsContent value="settings" className="space-y-4">
-            <SystemSettings />
+            <Tabs defaultValue="system" className="space-y-4">
+              <TabsList>
+                <TabsTrigger value="system">System Settings</TabsTrigger>
+                <TabsTrigger value="personal">Personal Settings</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="system">
+                <SystemSettings />
+              </TabsContent>
+              
+              <TabsContent value="personal">
+                <PersonalSettings />
+              </TabsContent>
+            </Tabs>
           </TabsContent>
         </Tabs>
       </main>
