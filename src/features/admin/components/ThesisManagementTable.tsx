@@ -7,6 +7,18 @@ import { Badge } from '@/components/ui/badge';
 import { Thesis } from '@/types/thesis';
 import { useDownloadThesis } from '@/features/thesis/hooks/useThesis';
 import { toast } from 'sonner';
+import ThesisViewDialog from '@/features/thesis/components/ThesisViewDialog';
+import EditThesisDialog from './EditThesisDialog';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface ThesisManagementTableProps {
   theses: Thesis[];
@@ -24,22 +36,36 @@ const ThesisManagementTable = ({ theses, isLoading }: ThesisManagementTableProps
   const [pageSize, setPageSize] = useState(10);
   const totalPages = Math.ceil(theses.length / pageSize);
 
+  // Dialog states
+  const [viewDialogOpen, setViewDialogOpen] = useState(false);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [selectedThesis, setSelectedThesis] = useState<Thesis | null>(null);
+
   const handleView = (thesis: Thesis) => {
-    toast.info('View Thesis', {
-      description: `Opening details for: ${thesis.title}`,
-    });
+    setSelectedThesis(thesis);
+    setViewDialogOpen(true);
   };
 
   const handleEdit = (thesis: Thesis) => {
-    toast.info('Edit Thesis', {
-      description: `Editing: ${thesis.title}`,
-    });
+    setSelectedThesis(thesis);
+    setEditDialogOpen(true);
   };
 
-  const handleDelete = (thesis: Thesis) => {
-    toast.info('Delete Thesis', {
-      description: `Delete action for: ${thesis.title}`,
-    });
+  const handleDeleteClick = (thesis: Thesis) => {
+    setSelectedThesis(thesis);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = () => {
+    if (selectedThesis) {
+      // Simulate delete
+      toast.success('Thesis deleted successfully', {
+        description: `"${selectedThesis.title}" has been removed.`,
+      });
+      setDeleteDialogOpen(false);
+      setSelectedThesis(null);
+    }
   };
 
   const handleDownload = (thesisId: string) => {
@@ -158,7 +184,7 @@ const ThesisManagementTable = ({ theses, isLoading }: ThesisManagementTableProps
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => handleDelete(thesis)}
+                    onClick={() => handleDeleteClick(thesis)}
                     className="h-8 w-8 p-0 text-destructive hover:text-destructive"
                     title="Delete thesis"
                   >
@@ -212,6 +238,41 @@ const ThesisManagementTable = ({ theses, isLoading }: ThesisManagementTableProps
           </PaginationContent>
         </Pagination>
       </div>
+
+      {/* View Dialog */}
+      <ThesisViewDialog
+        thesis={selectedThesis}
+        open={viewDialogOpen}
+        onOpenChange={setViewDialogOpen}
+      />
+
+      {/* Edit Dialog */}
+      <EditThesisDialog
+        thesis={selectedThesis}
+        open={editDialogOpen}
+        onOpenChange={setEditDialogOpen}
+      />
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This action cannot be undone. This will permanently delete the thesis
+              <span className="font-semibold block mt-2">
+                "{selectedThesis?.title}"
+              </span>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDeleteConfirm} className="bg-destructive hover:bg-destructive/90">
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
