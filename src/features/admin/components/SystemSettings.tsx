@@ -1,6 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ProgramManagement } from './ProgramManagement';
 import { GeneralSettings } from './GeneralSettings';
+import { UserManagement } from './UserManagement';
 
 export const SystemSettings = () => {
   return (
@@ -15,11 +16,16 @@ export const SystemSettings = () => {
       <Tabs defaultValue="programs" className="space-y-6">
         <TabsList>
           <TabsTrigger value="programs">Programs</TabsTrigger>
+          <TabsTrigger value="users">User Management</TabsTrigger>
           <TabsTrigger value="general">General Settings</TabsTrigger>
         </TabsList>
 
         <TabsContent value="programs" className="space-y-4">
           <ProgramManagement />
+        </TabsContent>
+
+        <TabsContent value="users" className="space-y-4">
+          <UserManagement />
         </TabsContent>
 
         <TabsContent value="general" className="space-y-4">
