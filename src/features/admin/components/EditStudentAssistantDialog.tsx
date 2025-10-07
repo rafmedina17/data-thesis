@@ -33,7 +33,6 @@ const formSchema = z.object({
   email: z.string().email('Invalid email address'),
   firstName: z.string().min(2, 'First name must be at least 2 characters'),
   lastName: z.string().min(2, 'Last name must be at least 2 characters'),
-  department: z.enum(['college', 'senior-high', 'both']),
   password: z.string().optional(),
 });
 
@@ -58,7 +57,6 @@ export const EditStudentAssistantDialog = ({
       email: '',
       firstName: '',
       lastName: '',
-      department: 'college',
       password: '',
     },
   });
@@ -69,7 +67,6 @@ export const EditStudentAssistantDialog = ({
         email: assistant.email,
         firstName: assistant.firstName,
         lastName: assistant.lastName,
-        department: assistant.department,
         password: '',
       });
     }
@@ -83,7 +80,6 @@ export const EditStudentAssistantDialog = ({
         email: data.email,
         firstName: data.firstName,
         lastName: data.lastName,
-        department: data.department,
       };
 
       if (data.password) {
@@ -156,28 +152,7 @@ export const EditStudentAssistantDialog = ({
               />
             </div>
 
-            <FormField
-              control={form.control}
-              name="department"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Department Access</FormLabel>
-                  <Select onValueChange={field.onChange} value={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select department" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="college">College Only</SelectItem>
-                      <SelectItem value="senior-high">Senior High Only</SelectItem>
-                      <SelectItem value="both">Both Departments</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+
 
             <FormField
               control={form.control}

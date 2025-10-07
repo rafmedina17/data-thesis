@@ -1,9 +1,11 @@
 import { Library } from "lucide-react";
 import DepartmentSelector from "../components/DepartmentSelector";
 import { useSettingsStore } from '@/stores/settings-store';
+import { useNavigate } from 'react-router-dom';
 
 const LandingPage = () => {
   const { systemSettings } = useSettingsStore();
+  const navigate = useNavigate();
   
   return (
     <div className="min-h-screen bg-gradient-subtle">
@@ -34,6 +36,20 @@ const LandingPage = () => {
                 <h1 className="text-lg font-semibold">{systemSettings.schoolName}</h1>
                 <p className="text-sm text-muted-foreground">Academic Research Repository</p>
               </div>
+            </div>
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={() => navigate('/')}
+                className="px-4 py-2 text-sm font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+              >
+                Home
+              </button>
+              <button
+                onClick={() => navigate('/about')}
+                className="px-4 py-2 text-sm font-medium rounded-md hover:bg-muted/50 transition-colors"
+              >
+                About
+              </button>
             </div>
           </div>
         </div>

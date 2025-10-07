@@ -107,8 +107,8 @@ const ThesisDashboard = ({ department }: ThesisDashboardProps) => {
               <Button
                 variant="ghost"
                 size="sm"
+                onClick={() => navigate('/about')}
                 className="hover:bg-muted/50"
-                // About functionality placeholder
               >
                 About
               </Button>

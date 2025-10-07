@@ -13,6 +13,5 @@ export interface StudentAssistantFormData {
   email: string;
   firstName: string;
   lastName: string;
-  department: 'college' | 'senior-high' | 'both';
   password?: string;
 }

@@ -31,7 +31,6 @@ const formSchema = z.object({
   email: z.string().email('Invalid email address'),
   firstName: z.string().min(2, 'First name must be at least 2 characters'),
   lastName: z.string().min(2, 'Last name must be at least 2 characters'),
-  department: z.enum(['college', 'senior-high', 'both']),
   password: z.string().min(8, 'Password must be at least 8 characters'),
 });
 
@@ -54,7 +53,6 @@ export const AddStudentAssistantDialog = ({
       email: '',
       firstName: '',
       lastName: '',
-      department: 'college',
       password: '',
     },
   });
@@ -125,28 +123,7 @@ export const AddStudentAssistantDialog = ({
               />
             </div>
 
-            <FormField
-              control={form.control}
-              name="department"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Department Access</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select department" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="college">College Only</SelectItem>
-                      <SelectItem value="senior-high">Senior High Only</SelectItem>
-                      <SelectItem value="both">Both Departments</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+
 
             <FormField
               control={form.control}
