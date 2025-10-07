@@ -13,6 +13,7 @@ import CollegeDashboard from "@/features/thesis/pages/CollegeDashboard";
 import SeniorHighDashboard from "@/features/thesis/pages/SeniorHighDashboard";
 import LoginPage from "@/features/auth/pages/LoginPage";
 import AdminDashboard from "@/features/admin/pages/AdminDashboard";
+import PersonalSettingsPage from "@/features/admin/pages/PersonalSettingsPage";
 import NotFound from "./pages/NotFound";
 
 const App = () => (
@@ -31,6 +32,14 @@ const App = () => (
             element={
               <ProtectedRoute>
                 <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <PersonalSettingsPage />
               </ProtectedRoute>
             }
           />
