@@ -20,8 +20,6 @@ const thesisSchema = z.object({
   program: z.string().min(1, 'Program is required'),
   year: z.number().min(2000).max(new Date().getFullYear() + 1),
   abstract: z.string().min(50, 'Abstract must be at least 50 characters'),
-  keywords: z.string().min(3, 'At least one keyword is required'),
-  category: z.string().min(1, 'Category is required'),
 });
 
 type ThesisFormData = z.infer<typeof thesisSchema>;
@@ -35,7 +33,7 @@ interface AddThesisDialogProps {
 const collegePrograms = ['Computer Science', 'Environmental Science', 'Business Administration', 'Engineering'];
 const seniorHighPrograms = ['STEM', 'Humanities and Social Sciences', 'Accountancy and Business Management'];
 
-const categories = ['Research', 'Case Study', 'Experimental', 'Theoretical', 'Applied'];
+
 
 const AddThesisDialog = ({ open, onOpenChange, department }: AddThesisDialogProps) => {
   const { toast } = useToast();
@@ -56,8 +54,6 @@ const AddThesisDialog = ({ open, onOpenChange, department }: AddThesisDialogProp
       program: '',
       year: currentYear,
       abstract: '',
-      keywords: '',
-      category: '',
     },
   });
 
@@ -227,47 +223,7 @@ const AddThesisDialog = ({ open, onOpenChange, department }: AddThesisDialogProp
               />
             </div>
 
-            {/* Category and Keywords Row */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="category"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Category *</FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <FormControl>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select category" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {categories.map(category => (
-                          <SelectItem key={category} value={category}>
-                            {category}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
 
-              <FormField
-                control={form.control}
-                name="keywords"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Keywords *</FormLabel>
-                    <FormControl>
-                      <Input placeholder="e.g., AI, Machine Learning" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
 
             {/* Abstract */}
             <FormField
