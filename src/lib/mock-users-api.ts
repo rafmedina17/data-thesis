@@ -56,7 +56,7 @@ export const mockUsersApi = {
           firstName: data.firstName,
           lastName: data.lastName,
           role: 'student-assistant',
-          department: data.department,
+          department: 'college', // Default department when form doesn't include it
           createdAt: new Date().toISOString(),
           isActive: true,
         };

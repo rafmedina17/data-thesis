@@ -112,9 +112,6 @@ export const UserManagement = () => {
                 <TableRow>
                   <TableHead>Name</TableHead>
                   <TableHead>Email</TableHead>
-                  <TableHead>Department Access</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Created At</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
@@ -125,37 +122,8 @@ export const UserManagement = () => {
                       {assistant.firstName} {assistant.lastName}
                     </TableCell>
                     <TableCell>{assistant.email}</TableCell>
-                    <TableCell>
-                      <Badge variant={getDepartmentBadge(assistant.department) as any}>
-                        {assistant.department === 'senior-high'
-                          ? 'Senior High'
-                          : assistant.department === 'both'
-                          ? 'Both'
-                          : 'College'}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant={assistant.isActive ? 'default' : 'secondary'}>
-                        {assistant.isActive ? 'Active' : 'Inactive'}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      {format(new Date(assistant.createdAt), 'MMM dd, yyyy')}
-                    </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-2">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => handleToggleStatus(assistant)}
-                          title={assistant.isActive ? 'Deactivate' : 'Activate'}
-                        >
-                          {assistant.isActive ? (
-                            <UserX className="h-4 w-4" />
-                          ) : (
-                            <UserCheck className="h-4 w-4" />
-                          )}
-                        </Button>
                         <Button
                           variant="ghost"
                           size="icon"

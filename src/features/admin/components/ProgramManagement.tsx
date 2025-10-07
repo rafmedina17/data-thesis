@@ -10,7 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Switch } from '@/components/ui/switch';
+
 import { useSettingsStore, Program } from '@/stores/settings-store';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
@@ -21,7 +21,6 @@ const programSchema = z.object({
   name: z.string().min(3, 'Program name must be at least 3 characters').max(200, 'Program name is too long'),
   department: z.enum(['college', 'senior-high']),
   description: z.string().max(500, 'Description is too long').optional().or(z.literal('')),
-  isActive: z.boolean(),
 });
 
 type ProgramFormValues = z.infer<typeof programSchema>;
@@ -41,7 +40,6 @@ export const ProgramManagement = () => {
       name: '',
       department: 'college',
       description: '',
-      isActive: true,
     },
   });
 
@@ -52,7 +50,6 @@ export const ProgramManagement = () => {
         name: program.name,
         department: program.department,
         description: program.description || '',
-        isActive: program.isActive,
       });
     } else {
       setEditingProgram(null);
@@ -60,7 +57,6 @@ export const ProgramManagement = () => {
         name: '',
         department: 'college',
         description: '',
-        isActive: true,
       });
     }
     setIsDialogOpen(true);
@@ -74,13 +70,15 @@ export const ProgramManagement = () => {
 
   const onSubmit = (data: ProgramFormValues) => {
     if (editingProgram) {
-      updateProgram(editingProgram.id, data);
+      // Preserve the existing isActive status when updating
+      updateProgram(editingProgram.id, { ...data, isActive: editingProgram.isActive });
       toast({
         title: 'Program Updated',
         description: 'Program has been updated successfully.',
       });
     } else {
-      addProgram(data);
+      // Set isActive to true by default when creating a new program
+      addProgram({ ...data, isActive: true });
       toast({
         title: 'Program Created',
         description: 'New program has been added successfully.',
@@ -190,23 +188,7 @@ export const ProgramManagement = () => {
                         </FormItem>
                       )}
                     />
-                    <FormField
-                      control={form.control}
-                      name="isActive"
-                      render={({ field }) => (
-                        <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                          <div className="space-y-0.5">
-                            <FormLabel className="text-base">Active Status</FormLabel>
-                            <div className="text-sm text-muted-foreground">
-                              Enable or disable this program
-                            </div>
-                          </div>
-                          <FormControl>
-                            <Switch checked={field.value} onCheckedChange={field.onChange} />
-                          </FormControl>
-                        </FormItem>
-                      )}
-                    />
+
                     <div className="flex justify-end gap-3">
                       <Button type="button" variant="outline" onClick={handleCloseDialog}>
                         Cancel
@@ -240,14 +222,13 @@ export const ProgramManagement = () => {
                 <TableRow>
                   <TableHead>Program Name</TableHead>
                   <TableHead>Department</TableHead>
-                  <TableHead>Status</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {filteredPrograms.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={4} className="text-center py-8 text-muted-foreground">
+                    <TableCell colSpan={3} className="text-center py-8 text-muted-foreground">
                       No programs found
                     </TableCell>
                   </TableRow>
@@ -267,11 +248,6 @@ export const ProgramManagement = () => {
                       <TableCell>
                         <Badge variant="outline">
                           {program.department === 'college' ? 'College' : 'Senior High'}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant={program.isActive ? 'default' : 'secondary'}>
-                          {program.isActive ? 'Active' : 'Inactive'}
                         </Badge>
                       </TableCell>
                       <TableCell className="text-right">

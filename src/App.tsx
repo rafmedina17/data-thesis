@@ -14,6 +14,7 @@ import SeniorHighDashboard from "@/features/thesis/pages/SeniorHighDashboard";
 import LoginPage from "@/features/auth/pages/LoginPage";
 import AdminDashboard from "@/features/admin/pages/AdminDashboard";
 import PersonalSettingsPage from "@/features/admin/pages/PersonalSettingsPage";
+import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 
 const App = () => (
@@ -24,6 +25,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
+          <Route path="/about" element={<About />} />
           <Route path="/college" element={<CollegeDashboard />} />
           <Route path="/senior-high" element={<SeniorHighDashboard />} />
           <Route path="/login" element={<LoginPage />} />
