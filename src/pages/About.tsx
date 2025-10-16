@@ -1,58 +1,12 @@
-import { Library } from "lucide-react";
 import { useSettingsStore } from "@/stores/settings-store";
-import { useNavigate } from "react-router-dom";
+import AppHeader from "@/components/shared/AppHeader";
 
 const About = () => {
   const { systemSettings } = useSettingsStore();
-  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-gradient-subtle">
-      {/* Header */}
-      <header 
-        className="border-b border-border/50 bg-background/80 backdrop-blur-sm sticky top-0 z-50"
-        style={systemSettings.headerBackground ? {
-          backgroundImage: `url(${systemSettings.headerBackground})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        } : undefined}
-      >
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              {systemSettings.schoolLogo ? (
-                <img 
-                  src={systemSettings.schoolLogo} 
-                  alt={systemSettings.schoolName}
-                  className="h-10 w-10 object-contain rounded-xl"
-                />
-              ) : (
-                <div className="p-2 rounded-xl bg-primary text-primary-foreground">
-                  <Library className="w-6 h-6" />
-                </div>
-              )}
-              <div>
-                <h1 className="text-lg font-semibold">{systemSettings.schoolName}</h1>
-                <p className="text-sm text-muted-foreground">Academic Research Repository</p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-2">
-              <button
-                onClick={() => navigate('/')}
-                className="px-4 py-2 text-sm font-medium rounded-md hover:bg-muted/50 transition-colors"
-              >
-                Home
-              </button>
-              <button
-                onClick={() => navigate('/about')}
-                className="px-4 py-2 text-sm font-medium rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
-              >
-                About
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
+      <AppHeader />
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-16 max-w-4xl">
