@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import { Filter, Library } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Filter } from "lucide-react";
 import { useUIStore } from "@/stores/ui-store";
 import { useThesisList } from "../hooks/useThesis";
 import { ThesisFilters, Thesis } from "@/types/thesis";
@@ -11,13 +9,14 @@ import SearchInput from "@/components/shared/SearchInput";
 import LoadingSpinner from "@/components/shared/LoadingSpinner";
 import ThesisCard from "./ThesisCard";
 import ThesisViewDialog from "./ThesisViewDialog";
+import AppHeader from "@/components/shared/AppHeader";
+import { Button } from "@/components/ui/button";
 
 interface ThesisDashboardProps {
   department: 'college' | 'senior-high';
 }
 
 const ThesisDashboard = ({ department }: ThesisDashboardProps) => {
-  const navigate = useNavigate();
   const { searchQuery } = useUIStore();
   const [filters, setFilters] = useState<ThesisFilters>({
     department,
@@ -82,40 +81,7 @@ const ThesisDashboard = ({ department }: ThesisDashboardProps) => {
 
   return (
     <div className="min-h-screen bg-gradient-subtle">
-      {/* Header */}
-      <header className="border-b border-border/50 bg-background/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="p-2 rounded-xl bg-primary text-primary-foreground">
-                <Library className="w-6 h-6" />
-              </div>
-              <div>
-                <h1 className="text-lg font-semibold">Tayabas Western Academy</h1>
-                <p className="text-sm text-muted-foreground">Academic Research Repository</p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => navigate('/')}
-                className="hover:bg-muted/50"
-              >
-                Home
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => navigate('/about')}
-                className="hover:bg-muted/50"
-              >
-                About
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
+      <AppHeader />
 
       {/* Department & Stats */}
       <div className="container mx-auto px-4 py-4">
