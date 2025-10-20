@@ -38,7 +38,7 @@ const AppHeader = () => {
               <h1 className="text-lg font-semibold">
                 {systemSettings.schoolName}
               </h1>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm ">
                 Academic Research Repository
               </p>
             </div>
