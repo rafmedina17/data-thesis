@@ -14,13 +14,8 @@ const LandingPage = () => {
         <div className="text-center mb-16 animate-fade-in">
           
           <h1 className="text-display mb-6 max-w-4xl mx-auto">
-            Discover Outstanding
-            <span className="block text-primary">Academic Research</span>
+            Discover Outstanding Academic Research
           </h1>
-          
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            {systemSettings.aboutContent}
-          </p>
         </div>
 
         {/* Department Selection */}
