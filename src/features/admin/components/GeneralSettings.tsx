@@ -180,7 +180,7 @@ export const GeneralSettings = () => {
                       />
                     </FormControl>
                     <FormDescription>
-                      This text will appear on the landing page below the main heading
+                      This text will appear on the landing page and the About page
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
