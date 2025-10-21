@@ -330,8 +330,9 @@ const AddThesisDialog = ({ open, onOpenChange, department }: AddThesisDialogProp
                     </p>
                   </div>
                   <div className="border rounded-lg overflow-hidden">
-                    <iframe
-                      src={pdfPreviewUrl}
+                    <embed
+                      src={`${pdfPreviewUrl}#toolbar=0`}
+                      type="application/pdf"
                       className="w-full h-[500px]"
                       title="PDF Preview"
                     />
