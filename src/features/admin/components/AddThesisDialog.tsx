@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -10,9 +10,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { Upload, FileText } from 'lucide-react';
+import { Upload, FileText, X } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Card, CardContent } from '@/components/ui/card';
 
 const thesisSchema = z.object({
   title: z.string().min(5, 'Title must be at least 5 characters').max(200, 'Title must be less than 200 characters'),
@@ -40,6 +41,7 @@ const AddThesisDialog = ({ open, onOpenChange, department }: AddThesisDialogProp
   const queryClient = useQueryClient();
   const { getProgramsByDepartment } = useSettingsStore();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [pdfPreviewUrl, setPdfPreviewUrl] = useState<string | null>(null);
 
   const availablePrograms = getProgramsByDepartment(department);
   
@@ -119,8 +121,37 @@ const AddThesisDialog = ({ open, onOpenChange, department }: AddThesisDialogProp
         return;
       }
       setSelectedFile(file);
+      
+      // Create blob URL for PDF preview
+      const url = URL.createObjectURL(file);
+      setPdfPreviewUrl(url);
     }
   };
+
+  const handleRemoveFile = () => {
+    setSelectedFile(null);
+    if (pdfPreviewUrl) {
+      URL.revokeObjectURL(pdfPreviewUrl);
+      setPdfPreviewUrl(null);
+    }
+  };
+
+  // Cleanup blob URL on unmount or when dialog closes
+  useEffect(() => {
+    return () => {
+      if (pdfPreviewUrl) {
+        URL.revokeObjectURL(pdfPreviewUrl);
+      }
+    };
+  }, [pdfPreviewUrl]);
+
+  useEffect(() => {
+    if (!open && pdfPreviewUrl) {
+      URL.revokeObjectURL(pdfPreviewUrl);
+      setPdfPreviewUrl(null);
+      setSelectedFile(null);
+    }
+  }, [open]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -263,6 +294,18 @@ const AddThesisDialog = ({ open, onOpenChange, department }: AddThesisDialogProp
                       <span className="text-muted-foreground">
                         ({(selectedFile.size / 1024 / 1024).toFixed(2)} MB)
                       </span>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleRemoveFile();
+                        }}
+                        className="ml-2"
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
                     </div>
                   ) : (
                     <div className="flex flex-col items-center gap-2">
@@ -275,6 +318,27 @@ const AddThesisDialog = ({ open, onOpenChange, department }: AddThesisDialogProp
                 </label>
               </div>
             </div>
+
+            {/* PDF Preview */}
+            {pdfPreviewUrl && (
+              <Card>
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <Label className="text-sm font-medium">PDF Preview</Label>
+                    <p className="text-xs text-muted-foreground">
+                      You can copy and paste metadata from the preview below
+                    </p>
+                  </div>
+                  <div className="border rounded-lg overflow-hidden">
+                    <iframe
+                      src={pdfPreviewUrl}
+                      className="w-full h-[500px]"
+                      title="PDF Preview"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+            )}
 
             {/* Actions */}
             <div className="flex justify-end gap-3 pt-4">
