@@ -14,6 +14,7 @@ import { Upload, FileText, X } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Card, CardContent } from '@/components/ui/card';
+import { PDFPreview } from '@/components/shared/PDFPreview';
 
 const thesisSchema = z.object({
   title: z.string().min(5, 'Title must be at least 5 characters').max(200, 'Title must be less than 200 characters'),
@@ -329,23 +330,7 @@ const AddThesisDialog = ({ open, onOpenChange, department }: AddThesisDialogProp
                       You can copy and paste metadata from the preview below
                     </p>
                   </div>
-                  <div className="border rounded-lg overflow-hidden bg-muted/30">
-                    <object
-                      data={pdfPreviewUrl}
-                      type="application/pdf"
-                      className="w-full h-[500px]"
-                    >
-                      <div className="flex flex-col items-center justify-center h-[500px] gap-4">
-                        <FileText className="h-12 w-12 text-muted-foreground" />
-                        <p className="text-sm text-muted-foreground">
-                          PDF preview not available in your browser
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          File uploaded successfully: {selectedFile?.name}
-                        </p>
-                      </div>
-                    </object>
-                  </div>
+                  <PDFPreview fileUrl={pdfPreviewUrl} />
                 </CardContent>
               </Card>
             )}
