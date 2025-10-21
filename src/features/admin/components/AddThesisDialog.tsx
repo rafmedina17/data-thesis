@@ -329,13 +329,22 @@ const AddThesisDialog = ({ open, onOpenChange, department }: AddThesisDialogProp
                       You can copy and paste metadata from the preview below
                     </p>
                   </div>
-                  <div className="border rounded-lg overflow-hidden">
-                    <embed
-                      src={`${pdfPreviewUrl}#toolbar=0`}
+                  <div className="border rounded-lg overflow-hidden bg-muted/30">
+                    <object
+                      data={pdfPreviewUrl}
                       type="application/pdf"
                       className="w-full h-[500px]"
-                      title="PDF Preview"
-                    />
+                    >
+                      <div className="flex flex-col items-center justify-center h-[500px] gap-4">
+                        <FileText className="h-12 w-12 text-muted-foreground" />
+                        <p className="text-sm text-muted-foreground">
+                          PDF preview not available in your browser
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          File uploaded successfully: {selectedFile?.name}
+                        </p>
+                      </div>
+                    </object>
                   </div>
                 </CardContent>
               </Card>
