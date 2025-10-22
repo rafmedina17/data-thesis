@@ -4,7 +4,7 @@ import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Calendar, FileText, Users, BookOpen} from "lucide-react";
 import { Thesis } from "@/types/thesis";
-import PDFPreview from "@/components/shared/PDFPreview";
+import DepartmentSelector from "@/features/landing/components/DepartmentSelector";
 
 interface ThesisViewDialogProps {
   thesis: Thesis | null;
@@ -92,18 +92,8 @@ const ThesisViewDialog = ({ thesis, open, onOpenChange }: ThesisViewDialogProps)
                   <p className="text-sm text-muted-foreground">{formatDate(thesis.dateSubmitted)}</p>
                 </div>
               </div>
+            
             </div>
-
-            {/* PDF Preview */}
-            {thesis.pdfUrl && (
-              <>
-                <Separator />
-                <div>
-                  <h3 className="font-semibold mb-3">PDF Preview</h3>
-                  <PDFPreview fileUrl={thesis.pdfUrl} />
-                </div>
-              </>
-            )}
           </div>
         </ScrollArea>
       </DialogContent>

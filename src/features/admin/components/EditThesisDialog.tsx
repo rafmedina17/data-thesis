@@ -14,7 +14,6 @@ import { Upload, FileText } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Thesis } from '@/types/thesis';
-import PDFPreview from '@/components/shared/PDFPreview';
 
 const thesisSchema = z.object({
   title: z.string().min(5, 'Title must be at least 5 characters').max(200, 'Title must be less than 200 characters'),
@@ -286,14 +285,6 @@ const EditThesisDialog = ({ thesis, open, onOpenChange }: EditThesisDialogProps)
                 </label>
               </div>
             </div>
-
-            {/* PDF Preview */}
-            {(selectedFile || thesis.pdfUrl) && (
-              <div className="space-y-2">
-                <Label>{selectedFile ? 'New PDF Preview' : 'Current PDF'}</Label>
-                <PDFPreview file={selectedFile || undefined} fileUrl={!selectedFile ? thesis.pdfUrl : undefined} />
-              </div>
-            )}
 
             {/* Actions */}
             <div className="flex justify-end gap-3 pt-4">
